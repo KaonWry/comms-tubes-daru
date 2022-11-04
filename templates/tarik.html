@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Ganesha</title>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/fontawesome.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/solid.min.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light justify-content-between bg-light" style="position: fixed; width: 100%; top: 0;">
+        <a href="/">
+            <span class="navbar-brand">
+                Bank Ganesha
+            </span>
+        </a>
+        <div class="form-inline">
+        <div class="navbar-text">Halo {{nama}}</div>
+        <a href="/logout">
+            <input type="button" value="Log Out" class="btn btn-outline-danger" style="margin-left: 20px;">
+        </a>
+        </div>
+    </nav>
+    <div style="text-align: center; margin-top: 70px;">
+        <h1>Tarik Tunai</h1>
+    </div>
+    <form action="/tarik" method="post" enctype="multipart/form-data">
+        <div class="form-group" style="position: static; margin-left: 29%; margin-top: 3%;">
+            <label for="nominalTarik" class="col-form-label">Nominal uang yang akan ditarik</label>
+            <input type="text" name="nominalTarik" id="nominalTarik" class="form-control col-7" required placeholder="Nominal yang ditarik"><br><br>
+            <input type="button" value="Tarik" class="btn btn-outline-dark col-1" style="position: absolute; left: 62%;">
+        </div>
+    </form>
+    <div style="position: absolute; bottom: 40px; right: 10px;">
+        <a href="/">
+            <input type="button" value="Kembali ke menu utama" class="btn btn-outline-secondary">
+        </a>
+    </div>
+    <!-- JQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <!-- Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <!-- Moment JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
