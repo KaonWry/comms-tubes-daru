@@ -32,9 +32,12 @@
         <div class="form-group" style="position: static; margin-left: 29%; margin-top: 3%;">
             <label for="nominalTarik" class="col-form-label">Nominal uang yang akan ditarik</label>
             <input type="text" name="nominalTarik" id="nominalTarik" class="form-control col-7" required placeholder="Nominal yang ditarik"><br><br>
-            <input type="button" value="Tarik" class="btn btn-outline-dark col-1" style="position: absolute; left: 62%;">
+            <button type="submit" value="Tarik" class="btn btn-outline-dark col-1" style="position: absolute; left: 62%;">Tarik</button>
         </div>
     </form>
+    <div style="text-align: center;">
+        {{message}}
+    </div>
     <div style="position: absolute; bottom: 40px; right: 10px;">
         <a href="/">
             <input type="button" value="Kembali ke menu utama" class="btn btn-outline-secondary">

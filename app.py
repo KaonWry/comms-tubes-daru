@@ -147,14 +147,52 @@ def rekeningBaru():
         j+=1
     if (nama in namaPengguna):
         message = "Rekening sudah ada"
-        return render_template("bukarek.html", nama = nama, isLogin = True, message = message)
     else:
         f = open("static/data.txt", "a")
         f = f.write(f"\n{nama} {pin} {saldo}")
         f = open("static/session.txt", 'w')
         f = f.write(f"{nama}\n{True}")
         message = "Rekening berhasil dibuat"
-        return render_template("bukarek.html", nama = nama, isLogin = True, message = message)
+    return render_template("bukarek.html", nama = nama, isLogin = True, message = message)
+    
+
+# Tarik tunai
+@app.route("/tarik", methods = ["POST", "GET"])
+def tarikTunai():
+    nominalTarik = int(request.form.get("nominalTarik"))
+    f = open("static/session.txt")
+    f = f.read()
+    f = f.split("\n")
+    nama = f[0]
+    
+    f = open("static/data.txt")
+    f = f.read()
+    f = f.split("\n")
+    namaPengguna = [0] * len(f)
+    PINPengguna = [0] * len(f)
+    saldoPengguna = [0] * len(f)
+    j = 0
+    for i in f:
+        i = i.split(" ")
+        namaPengguna[j] = i[0]
+        PINPengguna[j] = i[1]
+        saldoPengguna[j] = i[2]
+        j+=1
+    if (nominalTarik > int(saldoPengguna[namaPengguna.index(nama)])):
+        message = "Saldo anda tidak cukup"
+    else:
+        message = "Tarik tunai berhasil"
+        saldoPengguna[namaPengguna.index(nama)] = int(saldoPengguna[namaPengguna.index(nama)])
+        saldoPengguna[namaPengguna.index(nama)]-=nominalTarik
+        for i in range(len(f)):
+            if (i == 0):
+                dataUpdate = f"{namaPengguna[i]} {PINPengguna[i]} {saldoPengguna[i]}"
+            else:
+                dataUpdate += f"\n{namaPengguna[i]} {PINPengguna[i]} {saldoPengguna[i]}"
+        f = open("static/data.txt", "w")
+        f = f.write(dataUpdate)
+    
+    return render_template("tarik.html", nama = nama, isLogin = True, message = message)
     
 
 if __name__=='__main__':
