@@ -35,7 +35,7 @@ def login():
     saldoPengguna = [0] * len(f)
     j = 0
     for i in f:
-        i = i.split(" ")
+        i = i.split("---")
         namaPengguna[j] = i[0]
         PINPengguna[j] = i[1]
         saldoPengguna[j] = i[2]
@@ -112,7 +112,7 @@ def bukaInfo():
     nama = f[0]
     isLogin = f[1]
     if (isLogin == "True"):
-        return render_template("info.html", nama = nama, isLogin = isLogin)
+        return render_template("info.html", nama = nama, isLogin = isLogin, namaNasabah = nama, PIN = pin, saldoNasabah = saldo)
     else:
         return render_template("menu.html")
 
@@ -133,26 +133,32 @@ def bukaRekening():
 # Buka rekening baru
 @app.route("/bukaRekening", methods = ["POST", "GET"])
 def rekeningBaru():
-    nama = (request.form.get("nama")).capitalize()
+    nama = (request.form.get("nama")).title()
     pin = request.form.get("PIN")
-    saldo = request.form.get("setor")
-    f = open("static/data.txt")
-    f = f.read()
-    f = f.split("\n")
-    namaPengguna = [0] * len(f)
-    j = 0
-    for i in f:
-        i = i.split(" ")
-        namaPengguna[j] = i[0]
-        j+=1
-    if (nama in namaPengguna):
-        message = "Rekening sudah ada"
+    saldo = int(request.form.get("setor"))
+    if(nama.count(" ") > 2):
+        message = "Nama nasabah maksimal 3 kata"
     else:
-        f = open("static/data.txt", "a")
-        f = f.write(f"\n{nama} {pin} {saldo}")
-        f = open("static/session.txt", 'w')
-        f = f.write(f"{nama}\n{True}")
-        message = "Rekening berhasil dibuat"
+        if (saldo < 50000):
+            message = "Saldo pembukaan rekening minimal Rp.50,000.-"
+        else:
+            f = open("static/data.txt")
+            f = f.read()
+            f = f.split("\n")
+            namaPengguna = [0] * len(f)
+            j = 0
+            for i in f:
+                i = i.split("---")
+                namaPengguna[j] = i[0]
+                j+=1
+            if (nama in namaPengguna):
+                message = "Rekening sudah ada"
+            else:
+                f = open("static/data.txt", "a")
+                f = f.write(f"\n{nama}---{pin}---{saldo}")
+                f = open("static/session.txt", 'w')
+                f = f.write(f"{nama}\n{True}")
+                message = "Rekening berhasil dibuat"
     return render_template("bukarek.html", nama = nama, isLogin = True, message = message)
     
 
@@ -172,7 +178,7 @@ def tarikTunai():
     saldoPengguna = [0] * len(f)
     j = 0
     for i in f:
-        i = i.split(" ")
+        i = i.split("---")
         namaPengguna[j] = i[0]
         PINPengguna[j] = i[1]
         saldoPengguna[j] = i[2]
@@ -185,9 +191,9 @@ def tarikTunai():
         saldoPengguna[namaPengguna.index(nama)]-=nominalTarik
         for i in range(len(f)):
             if (i == 0):
-                dataUpdate = f"{namaPengguna[i]} {PINPengguna[i]} {saldoPengguna[i]}"
+                dataUpdate = f"{namaPengguna[i]}---{PINPengguna[i]}---{saldoPengguna[i]}"
             else:
-                dataUpdate += f"\n{namaPengguna[i]} {PINPengguna[i]} {saldoPengguna[i]}"
+                dataUpdate += f"\n{namaPengguna[i]}---{PINPengguna[i]}---{saldoPengguna[i]}"
         f = open("static/data.txt", "w")
         f = f.write(dataUpdate)
     return render_template("tarik.html", nama = nama, isLogin = True, message = message)
@@ -209,7 +215,7 @@ def setorTunai():
     saldoPengguna = [0] * len(f)
     j = 0
     for i in f:
-        i = i.split(" ")
+        i = i.split("---")
         namaPengguna[j] = i[0]
         PINPengguna[j] = i[1]
         saldoPengguna[j] = i[2]
@@ -219,13 +225,14 @@ def setorTunai():
     saldoPengguna[namaPengguna.index(nama)]+=nominalSetor
     for i in range(len(f)):
         if (i == 0):
-            dataUpdate = f"{namaPengguna[i]} {PINPengguna[i]} {saldoPengguna[i]}"
+            dataUpdate = f"{namaPengguna[i]}---{PINPengguna[i]}---{saldoPengguna[i]}"
         else:
-            dataUpdate += f"\n{namaPengguna[i]} {PINPengguna[i]} {saldoPengguna[i]}"
+            dataUpdate += f"\n{namaPengguna[i]}---{PINPengguna[i]}---{saldoPengguna[i]}"
     f = open("static/data.txt", "w")
     f = f.write(dataUpdate)
     return render_template("setor.html", nama = nama, isLogin = True, message = message)
-    
+
+
 
 if __name__=='__main__':
     app.run(debug=True)
