@@ -40,9 +40,9 @@ def login():
         PINPengguna[j] = i[1]
         saldoPengguna[j] = i[2]
         j+=1
-    inpNama = request.form.get("nama")
+    inpNama = (request.form.get("nama")).title()
     inpPIN = request.form.get("pin")
-    if (inpNama in namaPengguna and inpPIN in PINPengguna):
+    if (inpNama in namaPengguna and inpPIN == PINPengguna[namaPengguna.index(inpNama)]):
         nama = inpNama
         isLogin = True
     else:
@@ -112,6 +112,21 @@ def bukaInfo():
     nama = f[0]
     isLogin = f[1]
     if (isLogin == "True"):
+        f = open("static/data.txt")
+        f = f.read()
+        f = f.split("\n")
+        namaPengguna = [0] * len(f)
+        PINPengguna = [0] * len(f)
+        saldoPengguna = [0] * len(f)
+        j = 0
+        for i in f:
+            i = i.split("---")
+            namaPengguna[j] = i[0]
+            PINPengguna[j] = i[1]
+            saldoPengguna[j] = i[2]
+            j+=1
+        pin = PINPengguna[namaPengguna.index(nama)]
+        saldo = f"Rp.{int(saldoPengguna[namaPengguna.index(nama)]):,}.-"  
         return render_template("info.html", nama = nama, isLogin = isLogin, namaNasabah = nama, PIN = pin, saldoNasabah = saldo)
     else:
         return render_template("menu.html")
