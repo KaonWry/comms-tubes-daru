@@ -29,16 +29,18 @@
     <div style="text-align: center; margin-top: 70px;">
         <h1>Transfer Dana</h1>
     </div>
-    <form action="/setor" method="post" enctype="multipart/form-data">
+    <form action="/transfer" method="post" enctype="multipart/form-data">
         <div class="form-group" style="position: static; margin-left: 29%; margin-top: 3%;">
-            <label for="nominalSetor" class="col-form-label">Nasabah tujuan transfer</label>
-            <input type="text" name="nominalSetor" id="nominalSetor" class="form-control col-7" required placeholder="Tujuan transfer"><br>
-            <label for="nominalSetor" class="col-form-label">Nominal uang yang akan ditransfer</label>
-            <input type="text" name="nominalSetor" id="nominalSetor" class="form-control col-7" required placeholder="Nominal yang ditransfer"><br><br>
-            <input type="button" value="Transfer" class="btn btn-outline-dark col-1" style="position: absolute; left: 62%;">            
+            <label for="tujuan" class="col-form-label">Nasabah tujuan transfer</label>
+            <input type="text" name="tujuan" id="tujuan" class="form-control col-7" required placeholder="Tujuan transfer"><br>
+            <label for="nominalTransfer" class="col-form-label">Nominal uang yang akan ditransfer</label>
+            <input type="text" name="nominalTransfer" id="nominalTransfer" class="form-control col-7" required placeholder="Nominal yang ditransfer"><br><br>
+            <button type="submit" class="btn btn-outline-dark col-1" style="position: absolute; left: 62%;">Transfer</button>       
         </div>
     </form>
-
+    <div style="text-align: center;">
+        {{message}}
+    </div>
     <div style="position: absolute; bottom: 40px; right: 10px;">
         <a href="/">
             <input type="button" value="Kembali ke menu utama" class="btn btn-outline-secondary">
