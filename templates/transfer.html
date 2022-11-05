@@ -32,9 +32,9 @@
     <form action="/transfer" method="post" enctype="multipart/form-data">
         <div class="form-group" style="position: static; margin-left: 29%; margin-top: 3%;">
             <label for="tujuan" class="col-form-label">Nasabah tujuan transfer</label>
-            <input type="text" name="tujuan" id="tujuan" class="form-control col-7" required placeholder="Tujuan transfer"><br>
+            <input type="text" name="tujuan" id="tujuan" class="form-control col-7" required placeholder="Tujuan transfer" pattern="[a-zA-Z]+"><br>
             <label for="nominalTransfer" class="col-form-label">Nominal uang yang akan ditransfer</label>
-            <input type="text" name="nominalTransfer" id="nominalTransfer" class="form-control col-7" required placeholder="Nominal yang ditransfer"><br><br>
+            <input type="text" name="nominalTransfer" id="nominalTransfer" class="form-control col-7" required placeholder="Nominal yang ditransfer" pattern="[0-9]+"><br><br>
             <button type="submit" class="btn btn-outline-dark col-1" style="position: absolute; left: 62%;">Transfer</button>       
         </div>
     </form>
