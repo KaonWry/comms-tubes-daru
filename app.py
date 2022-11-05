@@ -1,7 +1,7 @@
 # Import modules
 import locale
 import os
-from flask import Flask, request, render_template, Markup
+from flask import Flask, request, render_template, Markup, flash
 
 
 # Set locale
@@ -127,7 +127,35 @@ def bukaRekening():
     if (isLogin == "True"):
         return render_template("bukarek.html", nama = nama, isLogin = isLogin)
     else:
-        return render_template("menu.html")
+        return render_template("bukarek.html")
+    
+    
+# Buka rekening baru
+@app.route("/bukaRekening", methods = ["POST", "GET"])
+def rekeningBaru():
+    nama = (request.form.get("nama")).capitalize()
+    pin = request.form.get("PIN")
+    saldo = request.form.get("setor")
+    f = open("static/data.txt")
+    f = f.read()
+    f = f.split("\n")
+    namaPengguna = [0] * len(f)
+    j = 0
+    for i in f:
+        i = i.split(" ")
+        namaPengguna[j] = i[0]
+        j+=1
+    if (nama in namaPengguna):
+        message = "Rekening sudah ada"
+        return render_template("bukarek.html", nama = nama, isLogin = True, message = message)
+    else:
+        f = open("static/data.txt", "a")
+        f = f.write(f"\n{nama} {pin} {saldo}")
+        f = open("static/session.txt", 'w')
+        f = f.write(f"{nama}\n{True}")
+        message = "Rekening berhasil dibuat"
+        return render_template("bukarek.html", nama = nama, isLogin = True, message = message)
+    
 
 if __name__=='__main__':
     app.run(debug=True)
