@@ -164,7 +164,6 @@ def tarikTunai():
     f = f.read()
     f = f.split("\n")
     nama = f[0]
-    
     f = open("static/data.txt")
     f = f.read()
     f = f.split("\n")
@@ -191,8 +190,41 @@ def tarikTunai():
                 dataUpdate += f"\n{namaPengguna[i]} {PINPengguna[i]} {saldoPengguna[i]}"
         f = open("static/data.txt", "w")
         f = f.write(dataUpdate)
-    
     return render_template("tarik.html", nama = nama, isLogin = True, message = message)
+
+
+# Setor tunai
+@app.route("/setor", methods = ["POST", "GET"])
+def setorTunai():
+    nominalSetor = int(request.form.get("nominalSetor"))
+    f = open("static/session.txt")
+    f = f.read()
+    f = f.split("\n")
+    nama = f[0]
+    f = open("static/data.txt")
+    f = f.read()
+    f = f.split("\n")
+    namaPengguna = [0] * len(f)
+    PINPengguna = [0] * len(f)
+    saldoPengguna = [0] * len(f)
+    j = 0
+    for i in f:
+        i = i.split(" ")
+        namaPengguna[j] = i[0]
+        PINPengguna[j] = i[1]
+        saldoPengguna[j] = i[2]
+        j+=1
+    message = "Setor tunai berhasil"
+    saldoPengguna[namaPengguna.index(nama)] = int(saldoPengguna[namaPengguna.index(nama)])
+    saldoPengguna[namaPengguna.index(nama)]+=nominalSetor
+    for i in range(len(f)):
+        if (i == 0):
+            dataUpdate = f"{namaPengguna[i]} {PINPengguna[i]} {saldoPengguna[i]}"
+        else:
+            dataUpdate += f"\n{namaPengguna[i]} {PINPengguna[i]} {saldoPengguna[i]}"
+    f = open("static/data.txt", "w")
+    f = f.write(dataUpdate)
+    return render_template("setor.html", nama = nama, isLogin = True, message = message)
     
 
 if __name__=='__main__':

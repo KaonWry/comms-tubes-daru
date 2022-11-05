@@ -32,11 +32,13 @@
     <form action="/setor" method="post" enctype="multipart/form-data">
         <div class="form-group" style="position: static; margin-left: 29%; margin-top: 3%;">
             <label for="nominalSetor" class="col-form-label">Nominal uang yang akan disetor</label>
-            <input type="text" name="nominalSetor" id="nominalSetor" class="form-control col-7" required placeholder="Nominal yang disetor"><br><br>
-            <input type="button" value="Setor" class="btn btn-outline-dark col-1" style="position: absolute; left: 62%;">
+            <input type="text" name="nominalSetor" id="nominalSetor" class="form-control col-7" required placeholder="Nominal yang disetor" pattern="[0-9]+"><br><br>
+            <button type="submit" value="Tarik" class="btn btn-outline-dark col-1" style="position: absolute; left: 62%;">Setor</button>
         </div>
     </form>
-
+    <div style="text-align: center;">
+        {{message}}
+    </div>
     <div style="position: absolute; bottom: 40px; right: 10px;">
         <a href="/">
             <input type="button" value="Kembali ke menu utama" class="btn btn-outline-secondary">

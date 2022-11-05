@@ -31,7 +31,7 @@
     <form action="/tarik" method="post" enctype="multipart/form-data">
         <div class="form-group" style="position: static; margin-left: 29%; margin-top: 3%;">
             <label for="nominalTarik" class="col-form-label">Nominal uang yang akan ditarik</label>
-            <input type="text" name="nominalTarik" id="nominalTarik" class="form-control col-7" required placeholder="Nominal yang ditarik"><br><br>
+            <input type="text" name="nominalTarik" id="nominalTarik" class="form-control col-7" required placeholder="Nominal yang ditarik" pattern="[0-9]+"><br><br>
             <button type="submit" value="Tarik" class="btn btn-outline-dark col-1" style="position: absolute; left: 62%;">Tarik</button>
         </div>
     </form>
